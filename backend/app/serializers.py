@@ -6,14 +6,15 @@ from app.models import Post, Comment, SubComment
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = ['user', 'content', 'created_at', 'comments']
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ['user', 'post', 'text', 'created_at']
 
 class SubCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubComment
-        fields = "__all__"
+        fields = ['comment', 'user', 'text', 'created_at']
+
