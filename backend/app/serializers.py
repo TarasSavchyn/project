@@ -3,16 +3,16 @@ from rest_framework import serializers
 from app.models import Post, Comment
 
 
-class ReplySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = ["id", "user", "post", "text", "created_at", "parent_comment"]
-
-
 class CommentSerializer(serializers.ModelSerializer):
+    child_comment = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = ["id", "user", "post", "text", "created_at", "parent_comment"]
+        fields = ["id", "user", "post", "text", "created_at", "parent_comment", "child_comment"]
+
+    def get_child_comment(self, obj):
+        replies = Comment.objects.filter(parent_comment=obj).values_list('id', flat=True)
+        return list(replies)
 
     def validate(self, data):
         post = data.get("post")
@@ -26,7 +26,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class CommentDetailSerializer(serializers.ModelSerializer):
-    replies = CommentSerializer(many=True, read_only=True)
+    child_comment = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Comment
@@ -37,7 +37,7 @@ class CommentDetailSerializer(serializers.ModelSerializer):
             "text",
             "created_at",
             "parent_comment",
-            "replies",
+            "child_comment",
         ]
 
 
