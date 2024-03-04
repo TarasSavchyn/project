@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app.models import Post
+from app.models import Post, Comment, SubComment
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -8,14 +8,12 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = "__all__"
 
-
-class PostListSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = Comment
         fields = "__all__"
 
-
-class PostDetailSerializer(serializers.ModelSerializer):
+class SubCommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = SubComment
         fields = "__all__"
