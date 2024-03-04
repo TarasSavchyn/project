@@ -1,10 +1,10 @@
 from rest_framework import viewsets
 
-from app.models import Post, Comment, SubComment
+from app.models import Post, Comment
 from app.serializers import (
     PostSerializer,
     CommentSerializer,
-    SubCommentSerializer,
+    CommentDetailSerializer,
 )
 
 
@@ -21,7 +21,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-
-class SubCommentViewSet(viewsets.ModelViewSet):
-    queryset = SubComment.objects.all()
-    serializer_class = SubCommentSerializer
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return CommentDetailSerializer
+        return CommentSerializer
