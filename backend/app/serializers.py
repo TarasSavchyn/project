@@ -4,15 +4,27 @@ from app.models import Post, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    user_email = serializers.EmailField(source='user.email', read_only=True)
     child_comment = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ["id", "user", "post", "text", "created_at", "parent_comment", "child_comment"]
+        fields = [
+            "id",
+            "username",
+            "user_email",
+            "post",
+            "text",
+            "created_at",
+            "parent_comment",
+            "child_comment",
+
+        ]
 
     def get_child_comment(self, obj):
-        replies = Comment.objects.filter(parent_comment=obj).values_list('id', flat=True)
-        return list(replies)
+        child_comment = Comment.objects.filter(parent_comment=obj).values_list('id', flat=True)
+        return list(child_comment)
 
     def validate(self, data):
         post = data.get("post")
@@ -26,27 +38,43 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class CommentDetailSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    user_email = serializers.EmailField(source='user.email', read_only=True)
     child_comment = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Comment
         fields = [
             "id",
-            "user",
+            "username",
+            "user_email",
             "post",
             "text",
             "created_at",
             "parent_comment",
             "child_comment",
+
         ]
 
 
 class PostSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    user_email = serializers.EmailField(source='user.email', read_only=True)
+
     post_comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = ["id", "user", "content", "created_at", "post_comments"]
+        fields = [
+            "id",
+            "username",
+            "user_email",
+            "user",
+            "content",
+            "created_at",
+            "post_comments",
+
+        ]
         read_only_fields = ["user"]
 
     def get_post_comments(self, instance):

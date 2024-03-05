@@ -25,3 +25,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return CommentDetailSerializer
         return CommentSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
