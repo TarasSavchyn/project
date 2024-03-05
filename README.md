@@ -68,7 +68,7 @@ $ python3 manage.py runserver
 
 
 ## Docker
-In directory backend create file ".env" with the following content:
+In directory create file ".env" with the following content:
 ```python
 SECRET_KEY=django-insecure-5=6$k7w$$q_ks=zh%(!oer=$x=7*(cq)pxdpin@@koppqepe_6
 
@@ -84,16 +84,12 @@ version: "3.4"
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
+    image: savik1992/project-backend:latest
     ports:
       - "8080:8080"
-    volumes:
-      - ./backend:/app
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8080"
     env_file:
-      - backend/.env
+      - .env
     depends_on:
       - db
     healthcheck:
@@ -102,15 +98,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
-
   db:
     image: postgres:14-alpine
     env_file:
-      - backend/.env
+      - .env
 
 ```
-After create directory backend with file .env as in example.
 
 Then open your terminal and navigate to the directory you wish to store the project and run the following commands:
 ```sh
