@@ -1,13 +1,29 @@
+import os
+import uuid
+
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.text import slugify
 
 User = get_user_model()
+
+def post_photo_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.content[:8])}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/posts", filename)
 
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    photo = models.ImageField(
+        upload_to=post_photo_file_path,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return f"Post by {self.user.username} at {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"

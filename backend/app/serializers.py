@@ -73,6 +73,7 @@ class PostSerializer(serializers.ModelSerializer):
             "content",
             "created_at",
             "post_comments",
+            "photo",
 
         ]
         read_only_fields = ["user"]
