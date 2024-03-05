@@ -1,0 +1,11 @@
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyc
+*.pyd
+*.sqlite3
+
+# Djangorestframework
+/static/
+/media/
