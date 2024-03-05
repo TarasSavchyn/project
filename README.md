@@ -24,9 +24,9 @@ such technologies as Swagger, JWT Tokens, Docker, PostgreSQL are used.
 
 
 ## Documentation
-http://127.0.0.1:8000/api/doc/swagger/
+http://127.0.0.1:8000/api/schema/swagger-ui/
 
-http://127.0.0.1:8000/api/doc/redoc/
+http://127.0.0.1:8000/api/schema/redoc/
 
 ## Using
 Clone the repository from GitHub:
