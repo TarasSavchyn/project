@@ -1,6 +1,6 @@
 asgiref==3.7.2
 attrs==23.2.0
-Django==4.0
+Django==3.2
 django-appconf==1.0.6
 django-cors-headers==4.3.1
 django-ipware==6.0.4
