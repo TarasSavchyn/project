@@ -10,9 +10,9 @@ User = get_user_model()
 
 def post_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
-    filename = f"{slugify(instance.content[:8])}-{uuid.uuid4()}{extension}"
+    filename = f"{slugify(instance.text[:8])}-{uuid.uuid4()}{extension}"
 
-    return os.path.join("uploads/posts", filename)
+    return os.path.join("uploads/comments", filename)
 
 
 class Comment(models.Model):

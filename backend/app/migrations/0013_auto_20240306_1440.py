@@ -7,20 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0012_alter_post_photo'),
+        ("app", "0012_alter_post_photo"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='comment',
-            name='post',
+            model_name="comment",
+            name="post",
         ),
         migrations.AddField(
-            model_name='comment',
-            name='photo',
-            field=models.ImageField(blank=True, null=True, upload_to=app.models.post_photo_file_path),
+            model_name="comment",
+            name="photo",
+            field=models.ImageField(
+                blank=True, null=True, upload_to=app.models.post_photo_file_path
+            ),
         ),
         migrations.DeleteModel(
-            name='Post',
+            name="Post",
         ),
     ]
