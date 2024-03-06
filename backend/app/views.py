@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from app.models import Comment
 from app.serializers import CommentSerializer
 
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
@@ -28,3 +30,16 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         serializer.save(user=user)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="sort_by",
+                type={"type": "string"},
+                description="Filter all top-level comments.",
+                required=False,
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
