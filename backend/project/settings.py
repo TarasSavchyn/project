@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "app.apps.AppConfig",
     "user",
+    "rest_framework_recaptcha",
 ]
 
 
@@ -149,3 +150,5 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+DRF_RECAPTCHA_SECRET_KEY = "6LejhYwpAAAAAKjgYaFDK1a3blZa9w8_5CgJiuUU"

@@ -1,8 +1,7 @@
 from rest_framework.routers import DefaultRouter
-from app.views import PostViewSet, CommentViewSet
+from app.views import CommentViewSet
 
 router = DefaultRouter()
-router.register(r"posts", PostViewSet)
 router.register(r"comments", CommentViewSet)
 
 
